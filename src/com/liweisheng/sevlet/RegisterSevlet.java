@@ -32,6 +32,7 @@ public class RegisterSevlet extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("utf8");
+		request.setCharacterEncoding("utf8");
 		
 		String PHONE=request.getParameter("PHONE");
 		String USER_NAME=request.getParameter("USER_NAME");
@@ -48,6 +49,7 @@ public class RegisterSevlet extends HttpServlet {
 			user.setUserName(USER_NAME);
 			user.setPhone(PHONE);
 			user.setPassword(PASSWORD);
+			user.setHeadIcon("default.jpg");
 			iUser.insertUser(user);
 			//Ã·Ωª
 			session.commit();
