@@ -61,14 +61,16 @@ public class DemandSevlet extends HttpServlet {
 					String CONTENT=demand.getDemand_content();
 					String TIME=demand.getDeamnd_time();
 					
+					
 					IUser iUser=MybatisUtils.initMybatis(IUser.class).getMapper(IUser.class);
 					User user=iUser.getUserById(USER_ID);
 					
 					//需要填充的数据
 					String USER_NAME=user.getUserName();
 					String USER_HEAD_ICON=user.getHeadIcon();
+					String PHONE=user.getPhone();
 					
-					DemandList.DemandDetails demandDetails=new DemandList.DemandDetails(DEMAND_ID, USER_ID, USER_HEAD_ICON, USER_NAME, CONTENT, TIME);
+					DemandList.DemandDetails demandDetails=new DemandList.DemandDetails(DEMAND_ID, USER_ID, USER_HEAD_ICON, USER_NAME, CONTENT, TIME,PHONE);
 					//添加到GsonBean中
 					demandList.demandDetailsList.add(demandDetails);
 				}

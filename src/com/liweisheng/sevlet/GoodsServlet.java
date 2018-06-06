@@ -12,7 +12,9 @@ import org.apache.ibatis.session.SqlSession;
 import com.google.gson.Gson;
 import com.liweisheng.constant.Constant;
 import com.liweisheng.gson.bean.Common;
+import com.liweisheng.mybatis.bean.User;
 import com.liweisheng.mybatis.dao.IGoods;
+import com.liweisheng.mybatis.dao.IUser;
 import com.liweisheng.utils.MybatisUtils;
 import com.sun.org.apache.bcel.internal.generic.InstructionTargeter;
 
@@ -32,22 +34,34 @@ public class GoodsServlet extends HttpServlet {
 		int TYPE=Integer.parseInt(request.getParameter("TYPE"));
 		SqlSession session=MybatisUtils.initMybatis(IGoods.class);
 		IGoods iGoods=session.getMapper(IGoods.class);
-		
-		try {
-			switch (TYPE) {
-			case DELETE_GOODS_BY_ID:
+		switch (TYPE) {
+		case DELETE_GOODS_BY_ID:
+			try {
 				int GOODS_ID=Integer.parseInt(request.getParameter("GOODS_ID"));
+				//½µµÍÐÅÓþ·Ö
+				int USER_ID=iGoods.getGoodsById(GOODS_ID).getUser_id();
+				try {
+					SqlSession session2=MybatisUtils.initMybatis(IUser.class);
+					IUser iUser=session2.getMapper(IUser.class);
+					User user=iUser.getUserById(USER_ID);
+					int score=user.getCreditScore();
+					score=score-1;
+					user.setCreditScore(score);
+					iUser.updateUser(user);
+					session2.commit();
+					session2.close();
+				}catch (Exception e) {
+				}
 				iGoods.deleteGoods(GOODS_ID);
 				session.commit();
 				response.getWriter().write(gson.toJson(new Common(Constant.OK)));
-				break;
-
-			default:
-				break;
 			}
-		} finally {
-			session.close();
-		}
+			finally {
+				session.close();
+			}
+			
+			break;
+	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
