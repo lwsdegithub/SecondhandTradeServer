@@ -17,9 +17,16 @@ public class DemandList {
 		public String userName;
 		public String content;
 		public String time;
+		public String phone;
 		
+		public String getPhone() {
+			return phone;
+		}
+		public void setPhone(String phone) {
+			this.phone = phone;
+		}
 		public DemandDetails(int demandId, int userId, String userHeadIcon, String userName, String content,
-				String time) {
+				String time,String phone) {
 			super();
 			this.demandId = demandId;
 			this.userId = userId;
@@ -27,6 +34,7 @@ public class DemandList {
 			this.userName = userName;
 			this.content = content;
 			this.time = time;
+			this.phone=phone;
 		}
 		public int getDemandId() {
 			return demandId;
