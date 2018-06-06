@@ -17,7 +17,7 @@ public interface IGoods {
 	@Select("select * from table_goods where goods_id=#{id}")
 	public Goods getGoodsById(int id);
 	
-	@Select("select MAX(goods_id) from table_goods")
+	@Select("select ifnull(MAX(goods_id),1) from table_goods")
 	public int getMaxId();
 	
 	@Insert("insert into table_goods(goods_id,user_id,goods_name,goods_price,goods_photo,goods_description) values(#{goods_id},#{user_id},#{goods_name},#{goods_price},#{goods_photo},#{goods_description})")
