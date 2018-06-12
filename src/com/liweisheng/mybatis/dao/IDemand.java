@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import com.liweisheng.mybatis.bean.Demand;
 
 public interface IDemand {
-	@Select("select * from table_demand")
+	@Select("select * from table_demand order by demand_time desc")
 	public List<Demand> getDemandList();
 	
 	@Insert("insert into table_demand(user_id,demand_content) values (#{user_id},#{demand_content})")
